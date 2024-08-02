@@ -2,38 +2,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
 class Solution {
   public:
-  int edit(string s, string t, vector<vector<int>>&output){
-      int m=s.length();
-      int n=t.length();
-     if(s.length()==0||t.length()==0){
-            return max(s.size(),t.size());
-        }
-        if(output[m][n]!=-1){
-            return output[m][n];
-        }
-        int ans;
-        if(s[0]==t[0]){
-            ans=edit(s.substr(1),t.substr(1),output);
-        }
-        else{
-            int Delete = 1+edit(s,t.substr(1),output);
-            int insert= 1+edit(s.substr(1),t,output);
-            int replace = 1+edit(s.substr(1),t.substr(1),output);
-            ans=min(Delete,min(insert,replace));
-            // return min(Delete,min(insert,replace));   
-        }  
-          return output[m][n]=ans;
-          
+  int f(int i,int j,string &s,string &t,vector<vector<int>>&dp){
+      if(i<0)return j+1;
+      if(j<0)return i+1;
+      if(dp[i][j]!=-1)return dp[i][j];
+      if(s[i]==t[j])return dp[i][j]=f(i-1,j-1,s,t,dp);
+     int a= (1+f(i,j-1,s,t,dp));
+     int b=1+f(i-1,j,s,t,dp);
+     int c=1+f(i-1,j-1,s,t,dp);
+     return dp[i][j]=min(a,min(b,c));
   }
-    int editDistance(string s, string t) {
-       
-        int m=s.size();
-        int n=t.size();
-        vector<vector<int>> output(m+1,vector<int>(n+1,-1));
-        return edit(s,t,output);
+    int editDistance(string str1, string str2) {
+        vector<vector<int>>dp(str1.size(),vector<int>(str2.size(),-1));
+    return f(str1.size()-1,str2.size()-1,str1,str2,dp);
     }
 };
 

@@ -4,55 +4,48 @@ using namespace std;
 
 
 // } Driver Code Ends
-
+// User function Template for C++
 class Solution {
   public:
-    int isValid(string s) {
-        // code here
-        int n = s.size();
-        stack<int> st;
-        
-        string res = "";
-        for(int i=0;i<=n;i++){
-            if(s[i] == '.' || s[i] == '\0'){
-                int num = 0;
-                for(int j=0;j<res.size();j++){
-                    int temp = res[j] - '0';
-                    // cout << temp << endl; 
-                    num = num*10 + temp;
+   int isValid(string str) {
+         int n = str.length();
+        int count = 1;
+        string temp = "";
+
+        for (int i = 0; i < n; i++)
+        {
+            if (str[i] == '.')
+            {
+                count++;
+               if (temp.empty())
+                {
+                    return 0;
                 }
-                
-              //  cout << num <<endl ;
-    
-                st.push(num);
-                res = "";
-            }
-            else{
-                res+=s[i];
-            }
-        }
-        
-     //   cout << st.size() << endl ;
-        if(st.size() == 4){
-            while(!st.empty()){
-                int tp = st.top();
-              //   cout<< tp << endl ;
-                if(tp < 0 || tp > 255){
-                    return false;
+                int check = stoi(temp); // string into int
+                if (check > 255 || temp.length() > 3 || (temp.length()>1 && temp[0]=='0'))
+                {
+                    return 0;
                 }
-                st.pop();
+                else
+                    temp = "";
+            }
+            else
+            {
+                temp.push_back(str[i]);
             }
         }
-        else{
-            return false;
+        if (!temp.empty())
+        {
+            int check = stoi(temp); // string into int
+                if (check > 255 || temp.length() > 3 || (temp.length()>1 && temp[0]=='0'))
+                {
+                    return 0;
+                }
+            
         }
-        
-        if(st.size()==0) return true;
-          return false;
-        
-        
-        
-        
+        if (count != 4)
+           return 0;
+        return 1;
     }
 };
 

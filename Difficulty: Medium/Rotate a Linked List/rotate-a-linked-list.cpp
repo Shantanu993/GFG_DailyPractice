@@ -23,38 +23,32 @@ void printList(Node* node) {
 
 
 // } Driver Code Ends
-/*
 
-struct Node {
-    int data;
-    struct Node *next;
-    Node(int x) {
-        data = x;
-        next = NULL;
-    }
-};
-
-*/
 
 class Solution {
   public:
     // Function to rotate a linked list.
     Node* rotate(Node* head, int k) {
-        // Your code here
-        Node* temp = head;
-        int len = 1;
-        while(temp->next!=NULL){
-            len++;
+        Node *temp = head;
+        Node *s = head;
+        
+        while(k>1){
             temp = temp->next;
+            s = s->next;
+            k--;
         }
-        temp->next=head;
-        k=k%len;
-        for(int i=0;i<k;i++){
-            temp=temp->next;
+        if(temp->next == NULL){
+            return head;
         }
-        head=temp->next;
-        temp->next=NULL;
-        return head;
+        Node *m = temp->next;
+        while(s->next != NULL){
+            s = s->next;
+        }
+        
+        s->next = head;
+        temp->next = NULL;
+        
+        return m;
     }
 };
 

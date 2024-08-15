@@ -41,60 +41,42 @@ struct Node
 
 */
 
-
+// User function template for C++
 class Solution {
   public:
     Node* addOne(Node* head) {
         // Your Code here
         // return head of list after adding one
-        if(head->next==NULL){
-            if(head->data+1>9){
-                Node * n=new Node(0);
-                head->data=1;
-                head->next=n;
-                return head;
-            }
-            else{
-                head->data=head->data+1;
-                return head;
-            }
+        string num = "";
+        while(head != NULL){
+            num += to_string(head->data);    
+            head = head->next;
         }
-        Node * p=NULL;
-        Node * c=head;
-        Node * n=head->next;
-        while(n!=NULL){
-            c->next=p;
-            p=c;
-            c=n;
-            n=n->next;
+        
+        int i = num.size() - 1;
+        while(i >= 0 && num[i] == '9'){
+            num[i] = '0';
+            i--;
         }
-        c->next=p;
-        p=NULL,n=c->next;
-        int carry=(c->data+1)/10;
-        c->data=(c->data+1)%10;
-        c->next=p;
-        p=c;
-        c=n;
-        n=n->next;
-        while(n!=NULL){
-            int cc=c->data;
-            c->data=(cc+carry)%10;
-            carry=(cc+carry)/10;
-            c->next=p;
-            p=c;
-            c=n;
-            n=n->next;
+        
+        if(i >= 0){
+            num[i] += 1;
+        }else{
+            num = '1' + num;
         }
-        int cc=c->data;
-        c->data=(cc+carry)%10;
-        carry=(cc+carry)/10;
-        c->next=p;
-        if(carry){
-            Node * nn=new Node(1);
-            nn->next=c;
-            return nn;
+        
+        
+        int data = num[0] - '0';
+        Node* ans = new Node(data);
+        Node* temp = ans;
+        for(int i = 1;i < num.size();i++){
+            data = num[i] - '0';
+            temp->next = new Node(data);
+            temp = temp->next;
         }
-        return c;
+        
+        
+        return ans;
     }
 };
 

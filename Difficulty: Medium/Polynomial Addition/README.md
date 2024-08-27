@@ -1,0 +1,12 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/polynomial-addition/1?page=2&company=Amazon&sortBy=latest">Polynomial Addition</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given two polynomial numbers represented by a linked list. The task is to add these lists meaning the coefficients with the same variable powers.<br><strong>Note:</strong>&nbsp;</span>&nbsp;<span style="font-size: 18px;">G</span><span style="font-size: 18px;">iven polynomials are sorted in decreasing order of power.</span></p>
+<p><span style="font-size: 18px;"><strong>Examples:</strong></span></p>
+<pre><span style="font-size: 18px;"><strong>Input: </strong>LinkedList1: x<sup>2</sup>,<sup> </sup>LinkedList2: x<sup>3</sup>
+<strong>Output: </strong>x<sup>3</sup> + x<sup>2</sup>
+<strong>Explanation: </strong>Since, x<sup>2</sup> and x<sup>3</sup> both have different powers as 2 and 3. So, their coefficient can't be added up.</span>
+</pre>
+<pre><span style="font-size: 18px;"><strong>Input: </strong>LinkedList1:  x<sup>3</sup> -&gt; 2x<sup>2, </sup>LinkedList2:  3x<sup>3</sup> -&gt; 4x<sup>2</sup>
+<strong>Output: </strong>4x<sup>3</sup> -&gt; 6x<sup>2</sup>
+<strong>Explanation: </strong>Since, x<sup>3</sup> has two different coefficients as 3 and 1. Adding them up will lead to 4x<sup>3</sup>. Also, x<sup>2</sup> has two coefficients as 4 and 2. So, adding them up will give 6x<sup>2</sup>.</span></pre>
+<p><span style="font-size: 18px;"><strong>Note</strong>: Try to solve the question without using any extra space.</span></p>
+<p><span style="font-size: 18px;"><strong>Expected Time Complexity:</strong> O(n+m)<br><strong>Expected Auxiliary Space:</strong>&nbsp;O(1)</span></p>
+<p><span style="font-size: 18px;"><strong>Constraints:</strong><br>1 &lt;= no. of nodes LinkedList1, LinkedList2 &lt;= 10<sup>5</sup><br>1 &lt;= node-&gt;data &lt;= 10<sup>6</sup></span></p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Amazon</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Linked List</code>&nbsp;<code>Mathematical</code>&nbsp;<code>Data Structures</code>&nbsp;<code>Algorithms</code>&nbsp;

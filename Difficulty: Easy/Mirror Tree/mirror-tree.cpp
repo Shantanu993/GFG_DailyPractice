@@ -107,15 +107,21 @@ struct Node
     }
 }; */
 
+
 class Solution {
   public:
     // Function to convert a binary tree into its mirror tree.
+    void change(Node* root){
+        if(!root) return;
+        Node* temp=root->left;
+        root->left=root->right;
+        root->right=temp;
+        change(root->left);
+        change(root->right);
+    }
     void mirror(Node* node) {
         // code here
-         if (node == NULL) return;
-        mirror(node->left);
-        mirror(node->right);
-        swap(node->left, node->right);
+        change(node);
     }
 };
 

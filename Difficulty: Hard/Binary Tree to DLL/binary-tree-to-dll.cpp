@@ -102,6 +102,7 @@ void inorder(Node* root) {
 // } Driver Code Ends
 /* Structure for tree and linked list
 
+
 struct Node
 {
     int data;
@@ -115,33 +116,33 @@ struct Node
 };
  */
 
-class Solution
-{
-public: 
-    Node *prev = NULL;
-    Node *head = NULL;
-
-    void bToDLLUtil(Node *root)
-    {
-        if (root == NULL)
+// This function should return head to the DLL
+class Solution {
+  public:
+    void convertddl(Node* root,Node* &head,Node* &prev,int &count){
+        if(root==NULL){
             return;
-
-        bToDLLUtil(root->left);
-
-        if (prev == NULL) {
-            head = root;
-        } else {
-            root->left = prev;
-            prev->right = root;
         }
-        prev = root;
-
-        bToDLLUtil(root->right);
+    
+    convertddl(root->left,head,prev,count);
+    if(count==0){
+        count++;
+        head=root;
+        prev=root;
     }
-
-    Node *bToDLL(Node *root)
-    {
-        bToDLLUtil(root);
+    else{
+        root->left=prev;
+        prev->right=root;
+        prev=root;
+    }
+    convertddl(root->right,head,prev,count);
+    }
+    Node* bToDLL(Node* root) {
+        // code here
+        Node* prev=NULL;
+        Node* head=NULL;
+        int count=0;
+        convertddl(root,head,prev,count);
         return head;
     }
 };

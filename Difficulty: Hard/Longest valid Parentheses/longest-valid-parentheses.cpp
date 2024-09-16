@@ -4,55 +4,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
 // User function Template for C++
-class Solution{
-public:
-    int maxLength(string S){
-        int ct = 0;
-        int ma = 0;
-        int error = 0;
-        stack<int> st;
-        vector<int> dp(S.size() + 1 , 0);
-        for(int i = 0 ; i <S.size() ; i++){
-            if(S[i] == ')' && ct == 0){
-                continue;
-                
+class Solution {
+  public:
+    int maxLength(string& str) {
+        int open=0;
+        int close=0;
+        int ans=INT_MIN;
+        
+        for(int i=0;i<str.length();i++){
+            if(str[i]=='('){
+                open++;
             }
-            if(S[i] == '('){
-                st.push(i);
-                ct++;}
             else{
-                ct--;
-           //     if(ct==0){
-                    if(st.top() != 0)
-                    dp[i] = i - st.top() + 1 + dp[st.top() - 1];
-                    else dp[i] = i - st.top()+1;
-                    ma = max(ma ,dp[i]);
-               // }
-             //   else ma = max(ma , i - st.top() + 1);
-               
-                st.pop();
-                
+                close++;
             }
             
+            if(open<close) open=close=0;
+            if(open==close) ans=max(ans,2*close);
         }
         
-        return ma;
+        open=0;
+        close=0;
+        
+        
+        for(int i=str.length()-1;i>=0;i--){
+            if(str[i]=='('){
+                open++;
+            }
+            else{
+                close++;
+            }
+            
+            if(open>close) open=close=0;
+            if(open==close) ans=max(ans,2*close);
+        }
+        
+        return ans;
     }
 };
 
 //{ Driver Code Starts.
 
-int main(){
+int main() {
     int t;
-    cin>>t;
-    while(t--){
+    cin >> t;
+    while (t--) {
         string S;
-        cin>>S;
-        
+        cin >> S;
+
         Solution ob;
-        cout<<ob.maxLength(S)<<"\n";
+        cout << ob.maxLength(S) << "\n";
     }
     return 0;
 }

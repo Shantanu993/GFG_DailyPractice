@@ -9,32 +9,32 @@ using namespace std;
 
 // User function template for C++
 
-class Solution{
-  public:		
-	int lps(string s) {
-	    // Your code goes here
-	    vector<int>lps(s.size(),0);
-	    int pre=0,suf=1;
-	    while(suf<s.size())
-	    {
-	        if(s[pre]==s[suf])
-	        {
-	            lps[suf]=pre+1;
-	            pre++,suf++;
-	        }
-	        else
-	        {
-	            if(pre==0)
-	            {
-	                lps[suf]=0;
-	                suf++;
-	            }
-	            else
-	                pre=lps[pre-1];
-	        }
-	    }
-	    return lps[s.size()-1];
-	}
+class Solution {
+  public:
+    int lps(string str) {
+    int n = str.length();
+    vector<int> lps(n, 0);
+    
+    int len = 0;  
+    int i = 1;
+
+    while (i < n) {
+        if (str[i] == str[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        } else {
+            if (len != 0) {
+                len = lps[len - 1];
+            } else {
+                lps[i] = 0;
+                i++;
+            }
+        }
+    }
+    
+    return lps[n - 1];
+}
 };
 
 //{ Driver Code Starts.

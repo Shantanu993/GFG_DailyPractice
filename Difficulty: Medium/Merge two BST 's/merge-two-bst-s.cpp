@@ -83,34 +83,36 @@ Node* buildTree(string str) {
 
 class Solution {
   public:
-  void merge(Node *root, vector<int>&v)
-      {
-          if(root==NULL)
-          return;
-          merge(root->left,v);
-          v.push_back(root->data);
-          merge(root->right,v);
-      }
-    // Function to return a list of integers denoting the node
-    // values of both the BST in a sorted order.
+     void traverse(Node* root,vector<int>&vec){
+         if(root==nullptr) return;
+         traverse(root->left,vec);
+         vec.emplace_back(root->data);
+         traverse(root->right,vec); 
+     }
+   
     vector<int> merge(Node *root1, Node *root2) {
-        // Your code here
-        vector<int>v1,v2,count;
-        merge(root1,v1);
-        merge(root2,v2);
-        int i=0,j=0;
-        while(i<v1.size() && j<v2.size())
-        {
-            if(v1[i]<=v2[j])
-            count.push_back(v1[i++]);
-            else
-            count.push_back(v2[j++]);
-        }
-        while(i<v1.size())
-        count.push_back(v1[i++]);
-        while(j<v2.size())
-        count.push_back(v2[j++]);
-      return count;
+        vector<int>vec1,vec2;
+        traverse(root1,vec1);
+        traverse(root2,vec2);
+        vector<int>res;
+    //   merging
+    int i=0,j=0;
+    while(i<vec1.size()&&j<vec2.size()){
+        if(vec1[i]==vec2[j]){
+            res.emplace_back(vec1[i++]);
+            res.emplace_back(vec2[j++]);}
+        else if(vec1[i]>vec2[j]){
+            res.emplace_back(vec2[j++]);}
+        else {
+            res.emplace_back(vec1[i++]);}
+    }
+    while(i<vec1.size()){
+        res.emplace_back(vec1[i++]); }
+    while(j<vec2.size()){
+        res.emplace_back(vec2[j++]); }
+
+return res;        
+        
     }
 };
 

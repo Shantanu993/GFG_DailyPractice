@@ -6,46 +6,44 @@ using namespace std;
 class Solution {
   public:
     // Function to find the number of islands.
+   int n;
+    int m;
     
-     void dfs(int r ,int c , vector<vector<int>>&vis,vector<vector<char>>& grid){
+    void dfs(vector<vector<char>>& grid, int i, int j){
+        if(i<0 || i>=n || j<0 || j>=m || grid[i][j]!='1'){
+            return;
+        }
         
-        vis[r][c] = 1;
+        if(grid[i][j] == -1){
+            return;
+        }
         
-         int n = grid.size();
-         int m = grid[0].size();
-     
-            // traverse the neighbour nodes
-            for(int dr=-1; dr <= 1; dr++){
-                for(int dc = -1; dc<=1 ; dc++){
-                    
-                    int nr = r + dr;
-                    int nc = c + dc;
-                    if(nr >= 0 && nr < n && nc >=0 && nc < m 
-                         && grid[nr][nc] =='1' && !vis[nr][nc]){
-                      
-             
-                      dfs(nr,nc,vis,grid);
-                  }
-                }
-            }
+        grid[i][j] = '$';
         
+        dfs(grid, i+1, j);
+        dfs(grid, i-1, j);
+        dfs(grid, i, j+1);
+        dfs(grid, i, j-1);
+        dfs(grid, i+1, j+1);
+        dfs(grid, i-1, j-1);
+        dfs(grid, i-1, j+1);
+        dfs(grid, i+1, j-1);
     }
-    int numIslands(vector<vector<char>>& grid) 
-    {
-          int n = grid.size();
-        int m = grid[0].size();
-        int cnt = 0;
-        vector<vector<int>>vis(n, vector<int>(m,0));
-        for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < m  ; j++){
-                
-                if(!vis[i][j] && grid[i][j] =='1'){
-                    cnt++;
-                    dfs(i,j,vis,grid);
+    int numIslands(vector<vector<char>>& grid) {
+        // Code here
+        n = grid.size();
+        m = grid[0].size();
+        int islands = 0;
+        
+        for(int i =0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1'){
+                    dfs(grid,i,j);
+                    islands++;
                 }
             }
         }
-        return cnt;
+        return islands;
     }
 };
 

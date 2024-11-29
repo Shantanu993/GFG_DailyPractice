@@ -8,35 +8,62 @@ using namespace std;
 class Solution {
   public:
     string addBinary(string& s1, string& s2) {
-        int i =s1.size()-1 ;
-         
-         int j = s2.size()-1;
-          int carry =0 ;
-           
+        string ans = "";
+        int n = s1.size()-1;
+        int m = s2.size()-1;
+        string carry = "";
         
-       string result = "";
-
-    while (i >= 0 || j >= 0 || carry) {
-        int sum = carry;
-        if (i >= 0) sum += s1[i--] - '0';
-        if (j >= 0) sum += s2[j--] - '0';
-        result += (sum % 2) + '0';
-        carry = sum / 2;
-    }
-
-
-    int n = result.size()-1;
-   while(result[n]=='0'){
-       
-       result.pop_back();
-        n--;
+        while(n >= 0 and m >= 0) {
+            if(s1[n] == '0' and s2[m] == '0'){
+                if(carry == "1"){
+                    ans = "1" + ans;
+                    carry = "0";
+                }else{
+                    ans = "0" + ans;
+                }
+            }else if(s1[n] == '1' and s2[m] == '1'){
+                if(carry == "1") ans = "1" + ans;
+                else ans = "0" + ans;
+                carry = "1";
+            }else{
+                if(carry == "1") ans = "0" + ans;
+                else ans = "1" + ans;
+            }
+            n--;
+            m--;
+        }
         
-   }
-
-    reverse(result.begin(), result.end());
-   
-    
-    return result;
+        while(n >= 0){
+            if(carry == "1"){
+                if(s1[n] == '1') ans = "0" + ans;
+                else {
+                    ans = "1" + ans;
+                    carry = "0";
+                }
+            }else{
+                ans = s1[n] + ans;
+            }
+            n--;
+        }
+        
+        while(m >= 0){
+            if(carry == "1"){
+                if(s2[m] == '1') ans = "0" + ans;
+                else {
+                    ans = "1" + ans;
+                    carry = "0";
+                }
+            }else{
+                ans = s2[m] + ans;
+            }
+            m--;
+        }
+        
+        if(carry == "1") ans = "1" + ans;
+        int cnt = 0;
+        while(ans[cnt] == '0') cnt++;
+        ans.erase(0, cnt);
+        return ans;
     }
 };
 

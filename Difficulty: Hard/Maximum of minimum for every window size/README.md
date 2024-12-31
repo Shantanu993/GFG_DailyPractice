@@ -1,0 +1,16 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/maximum-of-minimum-for-every-window-size3453/1?page=1&difficulty=Hard&status=unsolved&sortBy=submissions">Maximum of minimum for every window size</a></h2><h3>Difficulty Level : Difficulty: Hard</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Given an array of integers <code>arr[]</code> of size <code>N</code>, the task is to find the <strong>maximum of the minimum values</strong> for every possible window size in the array, where the window size ranges from <code>1</code> to <code>N</code>.</span></p>
+<p><span style="font-size: 14pt;">More formally, for each window size <code>k</code>, determine the smallest element in all windows of size <code>k</code>, and then find the largest value among these minimums where 1&lt;=k&lt;=N.</span></p>
+<p><span style="font-size: 18px;"><strong>Examples :</strong></span></p>
+<pre><span style="font-size: 18px;"><strong>Input: </strong>arr[] = [10, 20, 30, 50, 10, 70, 30]
+<strong>Output: </strong>[70, 30, 20, 10, 10, 10, 10] <strong>
+Explanation: 
+</strong>1. First element in output indicates maximum of minimums of all </span><span style="font-size: 18px;">windows of size 1.
+</span><span style="font-size: 18px;">2. Minimums of windows of size 1 are [10], [20], [30], [50], [10], [</span><span style="font-size: 18px;">70] and [30]. Maximum of these minimums is 70. </span>
+<span style="font-size: 18px;">3. Second element in output indicates maximum of minimums of all </span><span style="font-size: 18px;">windows of size 2. 
+</span><span style="font-size: 18px;">4. Minimums of windows of size 2 are [10], [20], [30], [10], [10], </span><span style="font-size: 18px;">and [30].
+5. Maximum of these minimums is 30 </span><span style="font-size: 18px;">Third element in output indicates maximum of minimums of all </span><span style="font-size: 18px;">windows of size 3. 
+6. </span><span style="font-size: 18px;">Minimums of windows of size 3 are [10], [20], [10], [10] and [10].<br></span><span style="font-size: 18px;">7. Maximum of these minimums is 20. </span><span style="font-size: 18px;">Similarly other elements of output are computed.</span></pre>
+<pre><span style="font-size: 18px;"><strong>Input: </strong>arr[] = [10, 20, 30]
+<strong>Output: </strong>[30, 20, 10]<strong>
+Explanation: </strong>First element in output indicates maximum of minimums of all </span><span style="font-size: 18px;">windows of size 1. Minimums of windows of size 1 are [10] , [20] , [30]. Maximum of these minimums are 30 and similarly other outputs can be computed</span></pre>
+<p><span style="font-size: 18px;"><strong>Constraints:</strong><br>1 &lt;= arr.size() &lt;= 10<sup>5</sup><br>1 &lt;= arr[i] &lt;= 10<sup>6</sup></span></p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Flipkart</code>&nbsp;<code>Amazon</code>&nbsp;<code>Microsoft</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>sliding-window</code>&nbsp;<code>Stack</code>&nbsp;<code>Data Structures</code>&nbsp;<code>Algorithms</code>&nbsp;

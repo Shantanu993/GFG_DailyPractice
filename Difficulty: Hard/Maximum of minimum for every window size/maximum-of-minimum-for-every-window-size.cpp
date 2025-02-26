@@ -5,55 +5,45 @@ using namespace std;
 
 // } Driver Code Ends
 
-class Solution {
-  public:
-    // Function to find maximum of minimums of every window size.
-    vector<int> maxOfMin(vector<int>& a) {
-        // Your code here
-        int n=a.size();
-        vector<int>left(n),right(n);
-    stack<int>st;
-    for(int i=0;i<n;i++)
-    {
-        while(!st.empty() && a[st.top()]>=a[i])
-            st.pop();
-        if(st.empty())
-            left[i]=-1;
-        else  
-            left[i]=st.top();
-        st.push(i);
-    }
-    while(!st.empty())
-        st.pop();
-    for(int i=n-1;i>=0;i--)
-    {
-        while(!st.empty() && a[st.top()]>=a[i])
-            st.pop();
-        if(st.empty())
-            right[i]=n;
-        else  
-            right[i]=st.top();
-        st.push(i);
-    }
-    vector<int>ans(n+1,0);
-    for(int i=0;i<n;i++)
-    {
-        int len=right[i]-left[i]-1;
-        ans[len]=max(ans[len],a[i]);
-    }
-    for(int i=n-1;i>=1;i--)
-    {
-        ans[i]=max(ans[i],ans[i+1]);
-    }
-    vector<int>res(n);
-    for(int i=1;i<=n;i++)
-    {
-        res[i-1]=ans[i];
-    }
-    return res;
 
+class Solution {
+public:
+    vector<int> maxOfMins(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> result(n, 0);
+        vector<int> left(n, -1);
+        vector<int> right(n, n);
+        stack<int> s;
+        for (int i = 0; i < n; ++i) {
+            while (!s.empty() && arr[s.top()] >= arr[i]) {
+                s.pop();
+            }
+            if (!s.empty()) {
+                left[i] = s.top();
+            }
+            s.push(i);
+        }
+        while (!s.empty()) s.pop();
+        for (int i = n - 1; i >= 0; --i) {
+            while (!s.empty() && arr[s.top()] >= arr[i]) {
+                s.pop();
+            }
+            if (!s.empty()) {
+                right[i] = s.top();
+            }
+            s.push(i);
+        }
+        for (int i = 0; i < n; ++i) {
+            int window_size = right[i] - left[i] - 1;
+            result[window_size - 1] = max(result[window_size - 1], arr[i]);
+        }
+        for (int i = n - 2; i >= 0; --i) {
+            result[i] = max(result[i], result[i + 1]);
+        }
+        return result;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
@@ -70,7 +60,7 @@ int main() {
             arr.push_back(num);
         }
         Solution ob;
-        vector<int> res = ob.maxOfMin(arr);
+        vector<int> res = ob.maxOfMins(arr);
         for (int i : res)
             cout << i << " ";
         cout << endl;

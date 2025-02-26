@@ -1,0 +1,9 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/word-break-part-23249/1?page=1&company=Google&difficulty=Hard&status=unsolved&sortBy=submissions">Word Break - 2</a></h2><h3>Difficulty Level : Difficulty: Hard</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given a string <strong>s</strong> and a dictionary of words <strong>dict</strong><strong>,</strong> add spaces in <strong>s</strong> to construct a sentence where each word is a valid dictionary word. Each dictionary word can be used more than once. Return all such possible sentences.</span></p>
+<p><strong><span style="font-size: 18px;">Examples:</span></strong></p>
+<pre><span style="font-size: 18px;"><strong>Input:</strong> s = "catsanddog", dict = ["cats", "cat", "and", "sand", "dog"]
+<strong>Output:</strong> (cats and dog)(cat sand dog)
+<strong>Explanation:</strong> All the words in the given sentences are present in the dictionary.</span></pre>
+<pre><span style="font-size: 18px;"><strong>Input:</strong> s = "catsandog", dict = ["cats", "cat", "and", "sand", "dog"]
+<strong>Output:</strong> Empty
+<strong>Explanation:</strong> There is no possible breaking of the string s where all the words are present in dict.</span></pre>
+<p><span style="font-size: 18px;"><strong>Constraints:</strong><br>1 ≤ dict.size() ≤ 20<br>1 ≤ dict[i] ≤ 15<br>1 ≤ s.size() ≤ 500</span></p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Google</code>&nbsp;<code>IBM</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Dynamic Programming</code>&nbsp;<code>Recursion</code>&nbsp;<code>Backtracking</code>&nbsp;<code>Algorithms</code>&nbsp;

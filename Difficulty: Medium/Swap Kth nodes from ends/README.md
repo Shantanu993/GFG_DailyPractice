@@ -1,0 +1,11 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/swap-kth-node-from-beginning-and-kth-node-from-end-in-a-singly-linked-list/1?page=1&category=Linked%20List&difficulty=Medium&status=unsolved&sortBy=submissions">Swap Kth nodes from ends</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">A singly linked list and an integer of k are given. You need to swap the k<sup>th</sup> node from the beginning and the k<sup>th</sup> node from the end of the linked list. Swap the nodes through the links. Do&nbsp;not change&nbsp;the content of the nodes.</span></p>
+<p><span style="font-size: 14pt;"><strong>Note:&nbsp;</strong>The driver code will output <strong>"true"</strong> if you successfully swap the nodes.</span></p>
+<p><span style="font-size: 14pt;"><strong>Examples:</strong></span></p>
+<pre><span style="font-size: 14pt;"><strong>Input: </strong>LinkedList: 1-&gt;2-&gt;3-&gt;4, k = 1
+<strong>Output: </strong>true<strong>
+Explanation: </strong>Here k = 1, hence after swapping the 1st node from the beginning and end the new list will be 4-&gt;2-&gt;3-&gt;1. </span></pre>
+<pre><span style="font-size: 14pt;"><strong>Input: </strong>LinkedList: 1-&gt;2-&gt;3-&gt;4-&gt;5, k = 7
+<strong>Output: </strong>true<strong>
+Explanation: </strong>k &gt; n. Swapping is invalid. Return the head node as it is.<br><img src="https://media.geeksforgeeks.org/img-practice/prod/addEditProblem/701070/Web/Other/blobid1_1722511116.png" width="395" height="138"> </span></pre>
+<p><span style="font-size: 14pt;"><strong>Expected Time Complexity</strong>: O(n)<br><strong>Expected Auxillary Space:</strong> O(1)</span></p>
+<p><span style="font-size: 14pt;"><strong>Constraints:</strong></span><br><span style="font-size: 14pt;"><span style="font-size: 14pt;">1 &lt;= number of nodes &lt;= 10</span><sup>3<br></sup></span><span style="font-size: 14pt;"><span style="font-size: 18.6667px;">1 &lt;= node-&gt;data &lt;= 10<sup>6<br></sup></span></span><span style="font-size: 14pt;">1 &lt;= k &lt;= 10<sup>3</sup></span></p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Morgan Stanley</code>&nbsp;<code>Amazon</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Linked List</code>&nbsp;<code>Data Structures</code>&nbsp;

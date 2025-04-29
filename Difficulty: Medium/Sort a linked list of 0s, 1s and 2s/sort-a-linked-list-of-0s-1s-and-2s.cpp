@@ -3,9 +3,10 @@
 using namespace std;
 
 /* Link list Node */
-struct Node {
+class Node {
+  public:
     int data;
-    struct Node* next;
+    Node* next;
 
     Node(int x) {
         data = x;
@@ -33,10 +34,7 @@ void freeList(struct Node* head) {
 
 // } Driver Code Ends
 
-
-/*
-
-  Node is defined as
+/*  Node is defined as
   struct Node {
     int data;
     struct Node *next;
@@ -44,37 +42,73 @@ void freeList(struct Node* head) {
         data = x;
         next = NULL;
     }
-};
-
-*/
+};*/
 class Solution {
   public:
-    // Function to sort a linked list of 0s, 1s and 2s.
     Node* segregate(Node* head) {
-
-        // Add code here
-        Node* curr=head;
-        int cnt0=0,cnt1=0,cnt2=0;
-        while(curr){
-            if(curr->data==0)
-            cnt0++;
-            else if(curr->data==1)
-            cnt1++;
-            else
-            cnt2++;
-            curr=curr->next;
-        }  
-            curr=head;
-            while(cnt0--){
-                curr->data=0;
-                curr=curr->next;}
-                while(cnt1--){
-                    curr->data=1;
-                    curr=curr->next;}
-                    while(cnt2--){
-                        curr->data=2;
-                        curr=curr->next;}
-                        return head;
+        // code here
+       int count0 = 0,count1=0,count2=0;
+       Node * temp = head;
+       
+       while(temp)
+       {
+           if(temp->data == 0)
+           count0++;
+           else if(temp->data == 1)
+           count1++;
+           else
+           count2++;
+           
+           
+           temp = temp->next;
+       }
+       
+       Node * newHead=NULL;
+       temp = NULL;
+       while(count0--)
+       {
+           if(newHead==NULL)
+           {
+               newHead = new Node(0);
+               temp = newHead;
+           }
+           else
+           {
+               temp->next = new Node(0);
+               temp = temp->next;
+           }
+       }
+       
+       
+        while(count1--)
+       {
+           if(newHead==NULL)
+           {
+               newHead = new Node(1);
+               temp = newHead;
+           }
+           else
+           {
+               temp->next = new Node(1);
+               temp = temp->next;
+           }
+       }
+       
+        while(count2--)
+       {
+           if(newHead==NULL)
+           {
+               newHead = new Node(2);
+               temp = newHead;
+           }
+           else
+           {
+               temp->next = new Node(2);
+               temp = temp->next;
+           }
+       }
+       
+       return newHead;
     }
 };
 
@@ -115,6 +149,7 @@ int main() {
         Solution ob;
         Node* newHead = ob.segregate(head);
         printList(newHead);
+        cout << "~" << endl;
     }
 
     return 0;

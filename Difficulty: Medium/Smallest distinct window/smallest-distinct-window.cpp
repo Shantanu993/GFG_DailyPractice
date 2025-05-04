@@ -8,50 +8,31 @@ using namespace std;
 
 class Solution {
   public:
-    int findSubString(string& s) {
-        // Your code goes here
-        int u_count = 0;
-        int unique[256] = {0};
-        for (int s1 : s) 
-        {
-           if (unique[s1] == 0) 
-           {
-               u_count++;
-            }
-            unique[s1]++;
-        }
-
-        int min_len = INT_MAX;
-        int freq[256] = {0};
-        int count = 0;
-        int start = 0;
-        for (int end = 0; end < s.length(); end++) 
-        {  
-           freq[s[end]]++;
-           if (freq[s[end]] == 1) 
-           {
-              count++;
-            }
-            while (count == u_count) 
-            {
-                min_len = min(min_len, end - start + 1);
-                freq[s[start]]--;
-                if (freq[s[start]] == 0) 
-                {
-                   count--;
-                }
+    int findSubString(string& str) {
+        // code here
+        unordered_set<char> unique(str.begin(), str.end());
+        int n=str.size();
+        int total=unique.size();
+        int start=0, cnt=0;
+        int len=INT_MAX;
+        unordered_map<char, int> mpp;
+        for(int end=0; end<n; end++){
+            mpp[str[end]]++;
+            if(mpp[str[end]]==1) cnt++;
+            while(cnt==total){
+                len=min(len, end-start+1);
+                mpp[str[start]]--;
+                if(mpp[str[start]]==0) cnt--;
                 start++;
             }
-        } 
-    return  min_len;
+        }
+        return len;
     }
-    
-     
 };
 
 
 //{ Driver Code Starts.
-//   Driver code
+//      Driver code
 int main() {
     int t;
     cin >> t;

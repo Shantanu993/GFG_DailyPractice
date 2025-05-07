@@ -132,31 +132,45 @@ struct Node
 };
 */
 
+
 class Solution {
   public:
-    void recur(Node *root,vector<int> temp,vector<vector<int>> &ans)
-    {
-         temp.push_back(root->data);
-        if(root->left==NULL && root->right==NULL)
-        {
-            ans.push_back(temp);
-            return ;
+    vector<vector<int>> ans; // Vector to store all the paths from root to leaf nodes.
+    vector<int> curr;        // Temporary vector to store the current path.
+
+    // Helper function to recursively find all the paths
+    void pathsUtil(Node *root) {
+        // Base case: if the current node is NULL, return.
+        if (root == NULL)
+            return;
+
+        // Add the current node's data to the current path.
+        curr.push_back(root->data);
+
+        // If the current node is a leaf node (no left or right child), add the path to
+        // 'ans'.
+        if (root->left == NULL and root->right == NULL) {
+            ans.push_back(curr); // Add the current path to the result (ans).
+        } else {
+            // Recursively visit the left and right subtrees.
+            pathsUtil(root->left);  // Visit the left subtree first.
+            pathsUtil(root->right); // Then visit the right subtree.
         }
-       
-        if(root->left)
-        recur(root->left,temp,ans);
-        if(root->right)
-        recur(root->right,temp,ans);
+
+        // After exploring both subtrees, backtrack by removing the current node from
+        // the path.
+        curr.pop_back();
     }
-    vector<vector<int>> Paths(Node* root) {
-        // code here
-        vector<vector<int>> ans;
-        recur(root,{},ans);
+
+    // Main function that is called to find all paths
+    vector<vector<int>> Paths(Node *root) {
+        // Start the recursive traversal from the root.
+        pathsUtil(root);
+
+        // Return the result containing all paths from root to leaf nodes.
         return ans;
     }
 };
-
-
 
 
 //{ Driver Code Starts.

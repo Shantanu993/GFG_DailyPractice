@@ -1,55 +1,29 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
-    // Function to count the number of possible triangles.
     int countTriangles(vector<int>& arr) {
+        // code here
         int n = arr.size();
-        sort(arr.begin(), arr.end());
-        int count = 0;
-        for(int i=0;i<n-2;++i) {
-            int k=i+2;
-            for(int j=i+1;j<n;++j) {
-                while(k<n && arr[i] + arr[j]>arr[k]){
-                    k++;
-                    if(k>j){
-                        count+= k-j-1;
+        int cnt = 0;
+        sort(arr.begin() , arr.end());
+        for(int i = 0 ; i<n ; ++i){
+            for(int j = i+1 ; j<n ; ++j){
+                int pos = j;
+                int l = j+1 , h = n-1;
+                while(l<=h){
+                    int m = l + (h-l)/2;
+                    
+                    if(arr[m] < arr[i]+arr[j]){
+                        pos = m;
+                        l = m+1;
+                    }else{
+                        h = m-1;
                     }
                 }
-                 
+                
+                cnt+=pos-j;
             }
         }
-        return count;
+        
+        return cnt;
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    cin.ignore(); // To ignore the newline after the integer input
-    while (t--) {
-        int n;
-        vector<int> a;
-        string input;
-
-        // Input format: first number n followed by the array elements
-        getline(cin, input);
-        stringstream ss(input);
-        int num;
-        while (ss >> num)
-            a.push_back(num);
-
-        Solution obj;
-        cout << obj.countTriangles(a) << "\n~\n";
-    }
-
-    return 0;
-}
-
-// } Driver Code Ends

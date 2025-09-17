@@ -1,52 +1,41 @@
-//{ Driver Code Starts
-// Initial Template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-
-
 class Solution {
-public:
+  public:
     string decodedString(string &s) {
-        stack<string> str;
-        stack<int> num;
-        string cur = "", temp;
-        int n = 0;
-
-        for (char c : s) {
-            if (isdigit(c)) n = n * 10 + (c - '0');
-            else if (c == '[') { str.push(cur); num.push(n); cur = ""; n = 0; }
-            else if (c == ']') {
-                temp = cur;
-                cur = str.top(); str.pop();
-                for (int i = 0, x = num.top(); i < x; i++) cur += temp;
-                num.pop();
-            } else cur += c;
+        // code here
+        stack<char> st;
+        for(int i=0; i<s.size(); i++){
+            if(s[i]==']'){
+                string temp_str = "";
+                while(st.top()!='['){
+                    temp_str += st.top();
+                    st.pop();
+                }
+                reverse(temp_str.begin(),temp_str.end());
+                st.pop();
+                
+                string num_str = "";
+                while(!st.empty() && isdigit(st.top())){
+                    num_str += st.top();
+                    st.pop();
+                }
+                reverse(num_str.begin(),num_str.end());
+                int num = stoi(num_str);
+                
+                for(int i=0; i<num; i++){
+                    for(auto& c : temp_str){
+                        st.push(c);
+                    }
+                }
+            }else{
+                st.push(s[i]);
+            }
         }
-        return cur;
+        string ans = "";
+        while (!st.empty()) {
+            ans += st.top();
+            st.pop();
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
     }
 };
-        
-  
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        string s;
-        cin >> s;
-
-        Solution ob;
-        cout << ob.decodedString(s) << "\n";
-
-        cout << "~"
-             << "\n";
-    }
-    return 0;
-}
-// } Driver Code Ends

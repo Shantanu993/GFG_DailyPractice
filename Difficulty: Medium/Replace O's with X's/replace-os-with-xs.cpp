@@ -1,106 +1,38 @@
-//{ Driver Code Starts
-// Initial Template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-// User function Template for C++
-void dfs(int row , int col , vector<vector<char>>&mat , vector<vector<int>>&vis,int drow[],int dcol[]){
-    vis[row][col] = 1;
-    int n = mat.size();
-    int m = mat[0].size();
-
-    for(int i=0;i<4;i++){
-        int nrow = row + drow[i];
-        int ncol = col + dcol[i];
-
-        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && mat[nrow][ncol]=='O'){
-            dfs(nrow,ncol,mat,vis,drow,dcol);
-        }
-
-    }
-
-}
 class Solution {
   public:
-    vector<vector<char>> fill(vector<vector<char>>& mat) {
-        // code here
-         int row = mat.size();
-        int col = mat[0].size();
-        vector<vector<int>>vis(row,vector<int>(col,0));
-        int drow[] = {-1,0,1,0};
-        int dcol[] = {0,1,0,-1};
-
-        //traverse first row and last row 
-        for(int j=0;j<col;j++){
-            //first row
-            if(!vis[0][j] && mat[0][j]=='O'){
-                //call dfs on this
-                dfs(0,j,mat,vis,drow,dcol);
-
-
-            }
-            //last row
-            if(!vis[row-1][j] && mat[row-1][j]=='O'){
-                //call dfs on this
-                dfs(row-1,j,mat,vis,drow,dcol);
-
-            }
-        }
-
-
-        // traverse along first column and last column
-        for(int i=0;i<row;i++){
-            //first column
-            if(!vis[i][0] && mat[i][0]=='O'){
-                dfs(i,0,mat,vis,drow,dcol);
-            }
-            //last column
-            if(!vis[i][col-1] && mat[i][col-1]=='O'){
-                dfs(i,col-1,mat,vis,drow,dcol);
-            }
-        }
-// traverse along all matrix and change the 0s with X if they are not lying on the boundary
-
-for(int i=0;i<row;i++){
-    for(int j=0;j<col;j++){
-
-        if(!vis[i][j] && mat[i][j]=='O'){
-            mat[i][j] = 'X';
-        }
+    
+    void solve(vector<vector<char>>& grid, vector<vector<int>>& visited,int &n,int &m,int i,int j){
+        visited[i][j]=1;
+        if(i>0 && grid[i-1][j]=='O' && visited[i-1][j]==0)solve(grid,visited,n,m,i-1,j);
+        if(i<n-1 && grid[i+1][j]=='O' && visited[i+1][j]==0)solve(grid,visited,n,m,i+1,j);
+        if(j<m-1 && grid[i][j+1]=='O' && visited[i][j+1]==0)solve(grid,visited,n,m,i,j+1);
+        if(j>0 && grid[i][j-1]=='O' && visited[i][j-1]==0)solve(grid,visited,n,m,i,j-1);
     }
-}
-return mat;
+    
+    void fill(vector<vector<char>>& grid) {
+        // Code here
+        
+        int n = grid.size();
+        int m = grid[0].size();
+        
+        vector<vector<int>>visited(n,vector<int>(m,0));
+        
+        for(int i=0;i<n;i++){
+            if(visited[i][0]==0 && grid[i][0]=='O')solve(grid,visited,n,m,i,0);
+            if(visited[i][m-1]==0 && grid[i][m-1]=='O')solve(grid,visited,n,m,i,m-1);
+        }
+        for(int j=0;j<m;j++){
+            if(visited[0][j]==0  && grid[0][j]=='O')solve(grid,visited,n,m,0,j);
+            if(visited[n-1][j]==0 && grid[n-1][j]=='O')solve(grid,visited,n,m,n-1,j);
+        }
+        
+        
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='O' && visited[i][j]==0)grid[i][j]='X';
+            }
+        }
+        
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, m;
-        cin >> n >> m;
-        vector<vector<char>> mat(n, vector<char>(m, '.'));
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                cin >> mat[i][j];
-
-        Solution ob;
-        vector<vector<char>> ans = ob.fill(mat);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                cout << ans[i][j] << " ";
-            }
-            cout << "\n";
-        }
-
-        cout << "~"
-             << "\n";
-    }
-    return 0;
-}
-// } Driver Code Ends

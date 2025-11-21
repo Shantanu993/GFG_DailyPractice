@@ -1,66 +1,62 @@
-// User function Template for C++
-
 class Solution {
   public:
-    vector<int> dijkstra(int a,int b,int n,vector<pair<int,int>> adj[])
-    {
-        vector<int> dist(n+1,1e9);
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        dist[a]=0;
-        pq.push({0,a});
-        
-        while(!pq.empty())
-        {
-            auto curr=pq.top();
-            pq.pop();
-            int dis=curr.first;
-            int node=curr.second;
-            
-            for(auto it:adj[node])
-            {
-                int v=it.first;
-                int wt=it.second;
-                if(dist[v]>dist[node]+wt)
-                {
-                    dist[v]=dist[node]+wt;
-                    pq.push({dist[v],v});
+   int shortestPath(int V, int a, int b, vector<vector<int>> &edges) {
+    vector<vector<tuple<int, int, int>>> adj(V);
+    for (const auto& edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int w1 = edge[2];
+        int w2 = edge[3];
+
+        adj[u].emplace_back(v, w1, w2);
+        adj[v].emplace_back(u, w1, w2);
+    }
+
+    const int INF = INT_MAX;
+    vector<vector<int>> dist(V, vector<int>(2, INF));
+
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> pq;
+
+    dist[a][0] = 0;
+    pq.emplace(0, a, 0);
+
+    while (!pq.empty()) {
+        auto [d, u, curved_count] = pq.top();
+        pq.pop();
+
+        if (d > dist[u][curved_count]) {
+            continue;
+        }
+
+        for (const auto& edge : adj[u]) {
+            int v = get<0>(edge);
+            int w1 = get<1>(edge);
+            int w2 = get<2>(edge);
+
+            // Straight Edge Transition (w1)
+            int new_d1 = d + w1;
+            int new_c1 = curved_count;
+
+            if (new_d1 < dist[v][new_c1]) {
+                dist[v][new_c1] = new_d1;
+                pq.emplace(new_d1, v, new_c1);
+            }
+
+            // Curved Edge Transition (w2)
+            if (curved_count == 0) {
+                int new_d2 = d + w2;
+                int new_c2 = 1;
+
+                if (new_d2 < dist[v][new_c2]) {
+                    dist[v][new_c2] = new_d2;
+                    pq.emplace(new_d2, v, new_c2);
                 }
             }
         }
-        return dist;
     }
-    int shortestPath(int n, int m, int a, int b, vector<vector<int>> &edges) {
-        vector<pair<int,int>> adj[n+1];
-        vector<vector<int>> curved;
-        
-        for(int i=0;i<m;i++)
-        {
-            int u=edges[i][0];
-            int v=edges[i][1];
-            int wt=edges[i][2];
-            int cwt=edges[i][3];
-            
-            adj[u].push_back({v,wt});
-            adj[v].push_back({u,wt});
-            
-            curved.push_back({u,v,cwt});
-        }
-        vector<int> dist1=dijkstra(a,b,n,adj);
-        vector<int> dist2=dijkstra(b,a,n,adj);
-        
-        int ans=dist1[b];
-        
-        for(int i=0;i<m;i++)
-        {
-            int u=curved[i][0];
-            int v=curved[i][1];
-            int cwt=curved[i][2];
-            
-            ans=min(ans,dist1[u]+cwt+dist2[v]);
-            ans=min(ans,dist1[v]+cwt+dist2[u]);
-        }
-        
-        if(ans>=1e9) return -1;
-        return ans;
-    }
+
+    int result = min(dist[b][0], dist[b][1]);
+
+    return (result == INF) ? -1 : result;
+}
 };

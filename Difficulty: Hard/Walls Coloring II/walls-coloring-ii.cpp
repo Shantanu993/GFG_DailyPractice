@@ -1,43 +1,37 @@
-// User function Template for C++
-
 class Solution {
   public:
-    int minCost(vector<vector<int>> &cost) {
-        int n = cost.size(), k = cost[0].size();
-        if(k == 1){
-            if(n == 1)
-                return cost[0][0];
+    int minCost(vector<vector<int>> &costs) {
+        // code here
+        int n=costs.size(),m=costs[0].size();
+        if(m==1){
+            if(n==1)
+                return costs[0][0];
             return -1;
         }
-        pair<int,int> mini = {INT_MAX,-1}, smini = {INT_MAX,-1};
-        for(int i=0; i<k; i++){
-            if(cost[0][i] < mini.first){
-                smini = mini;
-                mini = {cost[0][i], i};
+        vector<int>dp(m);
+        for(int j=0;j<m;j++)
+            dp[j]=costs[0][j];
+        for(int i=1;i<n;i++){
+            priority_queue<int> pq;
+            for(auto x:dp){
+                pq.push(x);
+                if(pq.size()>2)
+                    pq.pop();
             }
-            else if(cost[0][i] < smini.first)
-                smini = {cost[0][i], i};
-        }
-        
-        for(int i=1; i<n; i++){
-            pair<int,int> curMini = {INT_MAX,-1}, curSmini = {INT_MAX,-1};
-            
-            for(int j=0; j<k; j++){
-                int x = cost[i][j];
-                if(j != mini.second)
-                    x += mini.first;
+            int min2=pq.top();pq.pop();
+            int min1=pq.top();
+            // cout<<min1<<" "<<min2<<endl;
+            vector<int> dp2(m);
+            for(int j=0;j<m;j++){
+                int ans=costs[i][j];
+                if(dp[j]==min1)
+                    ans+=min2;
                 else
-                    x += smini.first;
-                if(x < curMini.first){
-                    curSmini = curMini;
-                    curMini = {x, j};
-                }
-                else if(x < curSmini.first)
-                    curSmini = {x, j};
+                    ans+=min1;
+                dp2[j]=ans;
             }
-            mini = curMini;
-            smini = curSmini;
+            dp=dp2;
         }
-        return mini.first;
+        return *min_element(dp.begin(),dp.end());
     }
 };

@@ -1,38 +1,33 @@
 class Solution {
-  public:
-  vector<vector<int>>v;
-  vector<vector<int>>split;
-  
- 
-    string matrixChainOrder(vector<int> &arr) {
-        // code here
-        int n=arr.size();
-        v.assign(n-1,vector<int>(n-1,0));
-        split.assign(n-1,vector<int>(n-1,-1));
-        
-        for(int l=2; l<n; l++){
-            for(int i=0; i<n-l; i++){
-               int j=i+l-1;
-                int mncost=1e9;
-                for(int k=i; k<j; k++){
-                    int cost=v[i][k]+v[k+1][j]+arr[i]*arr[k+1]*arr[j+1];
-                    
-                    if(cost<mncost){
-                        mncost=cost;
-                        split[i][j]=k;
-                    }
-                }
-                v[i][j]=mncost;
-            }
-          
-        }
-         return parenthes(0,n-2); 
-        
+    
+private:
+    string build(int i, int j, vector<vector<int>> &split) {
+        if (i == j) return string(1, 'A' + i);
+        int k = split[i][j];
+        return "(" + build(i, k, split) + build(k + 1, j, split) + ")";
     }
     
-     string parenthes(int i,int j){
-            if(i==j) return string(1,'A'+i);
-            int k = split[i][j];
-            return "("+parenthes(i,k)+parenthes(k+1,j)+")";
+public:
+    string matrixChainOrder(vector<int> &arr) {
+        int n = arr.size();
+        int m = n - 1; 
+        vector<vector<long long>> dp(m, vector<long long>(m, 0));
+        vector<vector<int>> split(m, vector<int>(m, -1));
+        for (int len = 2; len <= m; len++) {
+            for (int i = 0; i + len - 1 < m; i++) {
+                int j = i + len - 1;
+                dp[i][j] = LLONG_MAX;
+                
+                for (int k = i; k < j; k++) {
+                    long long cost = dp[i][k] + dp[k+1][j] + 1LL * arr[i] * arr[k+1] * arr[j+1];
+                    if (cost < dp[i][j]) {
+                        dp[i][j] = cost;
+                        split[i][j] = k;
+                    }
+                }
+            }
         }
+        
+        return build(0, m - 1, split);
+    }
 };

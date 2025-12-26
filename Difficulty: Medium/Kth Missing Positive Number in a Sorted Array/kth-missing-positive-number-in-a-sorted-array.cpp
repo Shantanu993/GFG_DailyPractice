@@ -1,71 +1,36 @@
-//{ Driver Code Starts
-// Initial function template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-// User function template for C++
-
 class Solution {
   public:
     int kthMissing(vector<int> &arr, int k) {
-        
+        // code here
         int n = arr.size();
+        int start = 0;
+        int end = arr.size()-1;
+        int index = n-1;
         
-        int l=0;
-        int h=n-1;
-        
-        while(l<=h){
+        while(start<=end){
+            int mid = start+((end-start)/2);
             
-            int mid = l + (h-l)/2;
+            int miss = arr[mid]-(mid+1); // missing element from that index.
             
-            if(arr[mid]-mid<=k){
-                l = mid + 1;
-            }
-            else{
-                h = mid - 1;
+            if(miss<k)start=mid+1;
+            else {
+                index=mid;
+                end= mid-1;
+                
             }
         }
-        return l + k;
+        
+        int miss = arr[index] - (index+1);
+        
+        if(miss>=k){
+           int a = miss-k;
+           return arr[index]-(a+1);
+        }
+        else{
+            k-=miss;
+            return arr[index]+k;
+        }
         
         
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int test_case;
-    cin >> test_case;
-    cin.ignore();
-    while (test_case--) {
-
-        int d;
-        vector<int> arr, brr, crr;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            arr.push_back(number);
-        }
-        getline(cin, input);
-        ss.clear();
-        ss.str(input);
-        while (ss >> number) {
-            crr.push_back(number);
-        }
-        d = crr[0];
-        int n = arr.size();
-        Solution ob;
-        int ans = ob.kthMissing(arr, d);
-        cout << ans << endl;
-
-        cout << "~"
-             << "\n";
-    }
-    return 0;
-}
-// } Driver Code Ends

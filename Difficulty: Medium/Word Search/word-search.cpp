@@ -1,77 +1,52 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
-public:
-    int n,m,ws;
-    bool valid(int i, int j){
-        return (i>=0 && j>=0 && i<n && j<m);
+  public:
+    int n;
+    int m;
+    
+    int row[4] = {-1,+1,0,0};
+    int col[4] = {0,0,-1,+1};
+    
+    bool check(int i,int j){
+        return i>=0 && i<n && j>=0 && j<m;
     }
-    bool dfs(vector<vector<char>>& board,string word,int ii,int i,int j,vector<vector<bool>>& vis){
-        if(!valid(i,j)) return false;
-        if(ii>=ws){
-            return true;
-        }
-        bool res = false;
-        vis[i][j] = true;
-        if(valid(i+1,j) && !vis[i+1][j] && board[i+1][j] == word[ii]){
-           res = res || dfs(board,word,ii+1,i+1,j,vis);
-        }else if(!res && valid(i-1,j) && !vis[i-1][j] && board[i-1][j] == word[ii]){
-           res = res || dfs(board,word,ii+1,i-1,j,vis);
-        }else if(!res && valid(i,j+1) && !vis[i][j+1] && board[i][j+1] == word[ii]){
-           res = res || dfs(board,word,ii+1,i,j+1,vis);
-        }else if(!res && valid(i,j-1) && !vis[i][j-1] && board[i][j-1] == word[ii]){
-           res = res || dfs(board,word,ii+1,i,j-1,vis);
-        }
-        vis[i][j] = false;
+    
+    bool find(vector<vector<char>> &mat,vector<vector<bool>> &visited, string &word,int index,int i,int j){
         
-        return res;
-    }
-    bool isWordExist(vector<vector<char>>& board, string word) {
-        bool result =false;
-        n = board.size();
-        m = board[0].size();
-        ws = word.size();
-        vector<vector<bool>> vis(n,vector<bool>(m,false));
-        for(auto i = 0;i<board.size();++i){
-            for(auto j = 0;j<board[i].size();++j){
-                if(word[0] == board[i][j]){
-                    vis[i][j] = true;
-                    if(dfs(board,word,1,i,j,vis)) return true;
-                    vis[i][j] = false;
-                }
+        if(index==word.size())return 1;
+        
+        for(int k=0;k<4;k++){
+            
+            if(check(i+row[k],j+col[k]) && visited[i+row[k]][j+col[k]]==0 && mat[i+row[k]][j+col[k]]==word[index]){
+                visited[i+row[k]][j+col[k]]=1;
+                if(find(mat,visited,word,index+1,i+row[k],j+col[k]))return 1;
+                visited[i+row[k]][j+col[k]]=0;
+                
             }
         }
+        
+        return 0;
+        
+    }
+    
+    bool isWordExist(vector<vector<char>> &mat, string &word) {
+        // Code here
+        vector<vector<bool>>visited(mat.size(),vector<bool>(mat[0].size(),0));
+        
+        n = mat.size();
+        m = mat[0].size();
+        
+        for(int i=0;i<mat.size();i++){
+            for(int j=0;j<mat[0].size();j++){
+                 
+                if(word[0]==mat[i][j]){
+                    visited[i][j] = 1;
+                    if(find(mat,visited,word,1,i,j))return true;
+                    visited[i][j] = 0;
+                }
+                
+            }
+        }
+        
         return false;
     }
 };
-
-//{ Driver Code Starts.
-int main() {
-    int tc;
-    cin >> tc;
-    while (tc--) {
-        int n, m;
-        cin >> n >> m;
-        vector<vector<char>> mat(n, vector<char>(m, '*'));
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                cin >> mat[i][j];
-        string word;
-        cin >> word;
-        Solution obj;
-        bool ans = obj.isWordExist(mat, word);
-        if (ans)
-            cout << "true\n";
-        else
-            cout << "false\n";
-
-        cout << "~"
-             << "\n";
-    }
-    return 0;
-}
-// } Driver Code Ends

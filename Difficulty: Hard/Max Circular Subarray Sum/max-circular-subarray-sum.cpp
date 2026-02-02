@@ -1,33 +1,33 @@
 class Solution {
-private:
-    vector<int> solve(int n, vector<int> &arr)
-    {
-        int mx=arr[0], mn=arr[0], total=arr[0];
-        int mxs=arr[0], mns=arr[0];
-        
-        for(int i=1; i<n; i++) {
-            mx=max(arr[i], arr[i]+mx);
-            mxs=max(mxs, mx);
-            
-            mn=min(arr[i], arr[i]+mn);
-            mns=min(mns, mn);
-            
-            total+=arr[i];
-        }
-        
-        return {mxs,mns,total};
-    }
-    
-public:
-    int maxCircularSum(vector<int> &arr) 
-    {
-        int n=arr.size();
-        vector<int> ans = solve(n,arr);
-        
-        int mx=ans[0], mn=ans[1], total=ans[2];
-        
-        if(mx<0)
-            return mx;
-        return max(mx,total-mn);
+  public:
+    int maxCircularSum(vector<int> &arr) {
+           
+           int n = arr.size();
+           
+           int mini = INT_MAX, minsum = 0;
+           int maxi = INT_MIN, maxsum = 0;
+           int total =0;
+           for(int i:arr){
+                    total+=i;
+                    
+                    minsum+=i;
+                    maxsum+=i;
+                    mini = min(mini, minsum);
+                    maxi = max(maxi, maxsum);
+                    if(minsum>0){
+                         minsum=0;
+                    }
+                    if(maxsum<0){
+                          maxsum=0;
+                    }
+                    
+                    
+   
+           }
+           
+        //   cout<<maxi<<" "<<mini<<endl;
+          if(maxi<0) return maxi;
+           
+           return max(maxi, total-mini);
     }
 };

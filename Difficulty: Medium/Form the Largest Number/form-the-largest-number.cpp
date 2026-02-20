@@ -1,14 +1,44 @@
+class cmp {
+  public:
+    bool operator()(const string &s1, const string &s2) {
+        return s1 + s2 > s2 + s1;
+    }
+    
+};
+
 class Solution {
   public:
-    static bool cmp(int & i, int & j)
-    {
-        return to_string(i)+to_string(j) > to_string(j)+to_string(i);
-    }
     string findLargest(vector<int> &arr) {
-        sort(arr.begin(),arr.end(), cmp);
-        string res = "";
-        for(auto it : arr)
-        res += to_string(it);
-        return res[0]=='0' ? "0" : res;
+        // code here
+        int n = arr.size();
+        
+        // convert all int numbers into string
+        vector<string> v(n);
+        for(int i = 0; i < n; i++) {
+            
+            string s = "";
+            
+            int val = arr[i];
+            if(val == 0) s = "0";
+            
+            while(val) {
+                char dig = val % 10 + '0';
+                s = dig + s;
+                val /= 10;
+            }
+            
+            v[i] = s;
+        }
+        
+        // Sort in order to get maximum number string
+        sort(v.begin(), v.end(), cmp());
+        
+        string ans = "";
+        for(int i = 0; i < n; i++) ans += v[i];
+        
+        char firstDig = ans[0];
+        if(firstDig == '0') return "0"; // 0000.. -> "0"
+      
+        return ans;
     }
 };

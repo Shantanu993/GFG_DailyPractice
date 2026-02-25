@@ -1,26 +1,75 @@
 class Solution {
+
   public:
-    int longestSubarray(vector<int> &arr, int k) {
-        // Code here
-        // convert to +1 , -1
-        int n=arr.size();
-        int sum=0;
-        int ans=0;
-        unordered_map<int,int>mp;
-        mp[0]=-1;
-        for(int i=0;i<n;i++){
-            sum+=(arr[i]>k?1:-1);
-            if(sum>0){
-                ans=i+1;
-            }
-            
-            if(mp.find(sum-1)!=mp.end()){
-                ans=max(ans,i-mp[sum-1]);
-            }
-            if(mp.find(sum)==mp.end()){
-                mp[sum]=i;
-            }
+
+    virtual int longestSubarray(vector<int> &arr, int k) {
+
+      int n=arr.size();
+
+      vector<int> cal(n, 0);
+
+      
+
+      for(int i=0; i<n; i++){
+
+        if(arr[i]>k) cal[i]=1;
+
+        else cal[i]=-1;
+
+      }
+
+      
+
+      vector<int> psumCal(n, 0);
+
+      psumCal[0]=cal[0];
+
+      for(int i=1; i<n; i++){
+
+        psumCal[i]=psumCal[i-1]+cal[i];   
+
+      }
+
+      
+
+    // for(int x: psumCal) cout<<x<<" ";
+
+    // cout<<endl;
+
+      
+
+      unordered_map<int, int> um;
+
+      int ans=0;
+
+      for(int i=0; i<n; i++){
+
+        if(psumCal[i]>0) ans=max(ans, i+1);
+
+        else{
+
+          if(um.find(psumCal[i]-1) != um.end()){
+
+            ans=max(ans, i-um[psumCal[i]-1]);  
+
+          }
+
+          if(um.find(psumCal[i]) != um.end()){
+
+            continue;  
+
+          }
+
+          um[psumCal[i]]=i;
+
         }
-        return ans;
+
+      }
+
+      
+
+      return ans;
+
     }
+
 };

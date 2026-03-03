@@ -2,25 +2,27 @@ class Solution {
   public:
     int totalElements(vector<int> &arr) {
         // code here
-        int n=arr.size();
-        int i=0, j=0, cnt=0, maxi=1;
-        unordered_map<int, int>mp;
+        int n = arr.size();
+        unordered_map<int,int>m;
+        int start=0;
+        int end = 0;
+        int ans = 0;
+        m[arr[0]]++;
         
-        for(; j<n; j++){
-            if(mp[arr[j]]==0){
-                cnt++;
+        while(end<n){
+            
+            if(m.size()<=2){
+                ans=max(ans,end-start+1);
+                end++;
+                if(end<n)m[arr[end]]++;
             }
-            mp[arr[j]]++;
-            for(; i<n && cnt>2; i++){
-                mp[arr[i]]--;
-                if(mp[arr[i]]==0){
-                    cnt--;
-                    mp.erase(arr[i]);
-                }
+            else{
+                m[arr[start]]--;
+                if(m[arr[start]]==0)m.erase(arr[start]);
+                start++;
             }
-            maxi=max(maxi, (j-i+1));
         }
         
-        return maxi;
+        return ans;
     }
 };

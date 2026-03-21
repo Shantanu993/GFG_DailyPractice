@@ -1,36 +1,34 @@
 class Solution {
   public:
-    pair<int,int> gre(vector<int> &a , int tar){
-        int idx = lower_bound(a.begin() , a.end() , tar) - a.begin();
+    virtual vector<int> countBSTs(vector<int>& arr){
+      vector<int> ans;
+      
+      int n=arr.size();
+      vector<long long int> cat(n+1, 0);
+      cat[0]=cat[1]=1;
+      
+      vector<int> v=arr;
+      sort(v.begin(), v.end());
+      
+      for(int i=2; i<=n; i++){
+        for(int j=0; j<i; j++){
+          cat[i] += (cat[j]*cat[i-1-j]);    
+        }  
+      }
+      
+      //--------------
+      
+      
+      for(int i=0; i<n; i++){
+        int ind=lower_bound(v.begin(), v.end(), arr[i]) - v.begin();
+        int l=ind-0;
+        int r=n-1-ind;
         
-        return {idx , a.size()-idx-1};
-    }
-    int ncr(int n){
-        if(n == 0 || n == 1) return 1;
-        if(n == 2) return 2;
-        if(n == 3) return 6;
+        ans.push_back((int)(cat[l]*cat[r]));
         
-        return n*ncr(n-1);
-    }
-    vector<int> countBSTs(vector<int>& arr) {
-        // Code here
-        int n = arr.size();
-        vector<int> a = arr;
-        sort(begin(a) , end(a));
-        vector<int> ans;
-        
-        pair<int,int> p;
-        for(int i = 0 ; i < n ; i++){
-            p = gre(a , arr[i]);
-            int l = p.first;
-            int r = p.second;
-            
-            int c = ncr(2*l)/(  (ncr(l+1)) * (ncr(l)) );
-            int d = ncr(2*r)/(  (ncr(r+1)) * (ncr(r)) );
-            
-            ans.push_back(c*d);
-        }
-        
-        return ans;
+      }
+      
+      return ans;
+      
     }
 };
